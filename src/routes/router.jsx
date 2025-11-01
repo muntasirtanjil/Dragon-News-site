@@ -5,44 +5,49 @@ import CatagoryNews from "../pages/CatagoryNews";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Authentication from "../layout/Authentication";
+import NewsDetails from "../pages/NewsDetails";
+import PrivateRoute from "../provider/PrivateRoute";
 
 const router = createBrowserRouter(
     [
         {
-            path:"/",
+            path: "/",
             element: <HomeLayout></HomeLayout>,
-            children:[
+            children: [
                 {
-                    path:"",
+                    path: "",
                     element: <HomePage></HomePage>
                 },
                 {
-                    path:"/category/:id",
+                    path: "/category/:id",
                     element: <CatagoryNews></CatagoryNews>,
-                    loader: ()=>fetch("/news.json"),
+                    loader: () => fetch("/news.json"),
                 },
             ]
         },
         {
-            path:"/auth",
+            path: "/auth",
             element: <Authentication></Authentication>,
             children: [
                 {
-                    path:"/auth/login",
+                    path: "/auth/login",
                     element: <Login></Login>
                 },
                 {
-                    path:"/auth/register",
+                    path: "/auth/register",
                     element: <Register></Register>
                 },
             ]
         },
         {
-            path:"/news",
-            element: <h2>news layout</h2>
+            path: "/news-details/:id",
+            element: <PrivateRoute>
+                <NewsDetails></NewsDetails>
+            </PrivateRoute>,
+            loader: () => fetch("/news.json"),
         },
         {
-            path:"/*",
+            path: "/*",
             element: <h2>Error-404</h2>
         },
     ]

@@ -4,11 +4,21 @@ import userImage from "../assets/user.png"
 import { AuthContext } from '../provider/AuthProvider';
 
 const Navber = () => {
-    const { user} = use(AuthContext)
+    const { user, logOut } = use(AuthContext)
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                alert("user trying to logOut")
+            })
+            .catch((error) => {
+                alert(error)
+            });
+    };
+
     return (
         <div className='flex justify-between items-center' >
             <div className=""> {user && user.email}</div>
-            
+
             <div className="nav flex gap-5 text-accent">
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/about">About</NavLink>
@@ -17,7 +27,10 @@ const Navber = () => {
             </div>
             <div className="login-btn flex gap-3.5 items-center">
                 <img src={userImage} alt="" />
-                <Link to="/auth/login" className='btn px-10 btn-primary'>Login</Link>
+                {
+                    user ? <button onClick={handleLogOut} className='btn px-10 btn-primary'>LogOut</button> : <Link to="/auth/login" className='btn px-10 btn-primary'>Login</Link>
+                }
+
             </div>
         </div>
     );
