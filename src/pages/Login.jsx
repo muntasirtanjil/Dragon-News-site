@@ -1,9 +1,13 @@
-import React, { use } from 'react';
-import { Link } from 'react-router';
+import React, { use, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
 
 const Login = () => {
     const { signIn, setUser } = use(AuthContext);
+    const [error, setError] = useState("");
+    const location = useLocation();
+    console.log(location)
+    const navigate = useNavigate();
     const handleLogin = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -11,14 +15,17 @@ const Login = () => {
         const password = form.password.value;
         // console.log({email, password})
 
-        signIn(email, password).then(result => {
-            const user = result.user;
-            setUser(user)
-        })
+        signIn(email, password)
+            .then(result => {
+                const user = result.user;
+                setUser(user);
+                navigate(`${location.state ? location.state : "/"}`);
+            })
             .catch((error) => {
-                // const errorCode = error.code;
-                const errorMessage = error.message;
-                alert(errorMessage)
+                const errorCode = error.code;
+                // const errorMessage = error.message;
+                // alert(errorMessage)
+                setError( errorCode,"incorrect password or user email")
             });
 
     }
@@ -29,10 +36,15 @@ const Login = () => {
                     <h1 className='text-2xl font-bold text-center'>Login your account</h1>
                     <fieldset className="fieldset">
                         <label className="label">Email</label>
-                        <input name='email' type="email" className="input" placeholder="Email" />
+                        <input name='email' type="email" className="input" placeholder="Email" required />
+
                         <label className="label">Password</label>
-                        <input name='password' type="password" className="input" placeholder="Password" />
+                        <input name='password' type="password" className="input" placeholder="Password" required />
+
                         <div><a className="link link-hover">Forgot password?</a></div>
+                        {
+                            error && <p className='text-red-500'>{error}</p>
+                        }
                         <button type='submit' className="btn btn-neutral mt-4">Login</button>
 
                     </fieldset>
