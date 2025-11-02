@@ -34,7 +34,7 @@ const Register = () => {
                     setUser({ ...user, displayName:name, photoURL:photoURL });
                     navigate("/")
                 }).catch((error) => {
-                        console.log(error);
+                        // console.log(error);
                         setUser(user)
                     });
             })

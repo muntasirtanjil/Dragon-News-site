@@ -23,6 +23,8 @@ const CatagoryNews = () => {
         }
     }, [data, id]);
 
+    
+
     return <div> 
         <h2 className='font-bold mb-5'>Total {categoryNews.length} News Found</h2>
         <div className='grid grid-cols-1 gap-5'>
