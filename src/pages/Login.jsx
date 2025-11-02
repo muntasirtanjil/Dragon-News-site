@@ -3,7 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../provider/AuthProvider';
 
 const Login = () => {
-    const { signIn, setUser } = use(AuthContext);
+    const { signIn, setUser, forgetPassword } = use(AuthContext);
+    const [email, setEmail] = useState("");
+
     const [error, setError] = useState("");
     const location = useLocation();
     // console.log(location)
@@ -25,10 +27,27 @@ const Login = () => {
                 const errorCode = error.code;
                 // const errorMessage = error.message;
                 // alert(errorMessage)
-                setError( errorCode,"incorrect password or user email")
+                setError(errorCode, "incorrect password or user email")
             });
 
+
     }
+    const handleForgetPassword = () => {
+
+        if (!email) {
+            alert("Please enter your email");
+            return;
+        }
+        forgetPassword(email).then(() => {
+            alert("sent a message for reset password , check your email");
+        })
+            .catch(error => {
+                alert(error.message);
+            });
+    }
+
+
+
     return (
         <div className='flex justify-center '>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -36,12 +55,21 @@ const Login = () => {
                     <h1 className='text-2xl font-bold text-center'>Login your account</h1>
                     <fieldset className="fieldset">
                         <label className="label">Email</label>
-                        <input name='email' type="email" className="input" placeholder="Email" required />
+                        <input name='email' type="email" className="input" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required />
 
                         <label className="label">Password</label>
                         <input name='password' type="password" className="input" placeholder="Password" required />
 
-                        <div><a className="link link-hover">Forgot password?</a></div>
+                        <div>
+                            <button
+                                type="button"
+                                onClick={handleForgetPassword}
+                                className="link link-hover"
+                            >
+                                Forgot password?
+                            </button>
+                        </div>
+
                         {
                             error && <p className='text-red-500'>{error}</p>
                         }
