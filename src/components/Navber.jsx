@@ -29,7 +29,7 @@ const Navber = () => {
             <div className="login-btn flex gap-3.5 items-center">
 
                 <div className="avatar">
-                    <div className="ring-primary ring-offset-base-100 w-12 rounded-full ring-2 ring-offset-2">
+                    <div className="ring-primary ring-offset-base-100 w-11 rounded-full ring-2 ring-offset-2">
                         <img className=' rounded-full border border-gray-300' src={`${user ? user.photoURL : userImage}`} alt="" />
                     </div>
                 </div>

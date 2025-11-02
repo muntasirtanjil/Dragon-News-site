@@ -51,7 +51,11 @@ const AuthProvider = ({ children }) => {
 
     const LoginWithGoogle = (provider)=>{
         return signInWithPopup(auth, provider);
-    }
+    };
+
+    const LoginWithGithub =(provider) =>{
+        return signInWithPopup(auth,provider);
+    };
 
     const authData = {
         user,
@@ -63,7 +67,8 @@ const AuthProvider = ({ children }) => {
         setLoading,
         updateUser,
         forgetPassword,
-        LoginWithGoogle
+        LoginWithGoogle,
+        LoginWithGithub
     };
 
     return <AuthContext value={authData}>
