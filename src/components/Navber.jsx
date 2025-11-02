@@ -1,11 +1,11 @@
 import React, { use } from 'react';
-import { Link, NavLink,  } from 'react-router';
+import { Link, NavLink, } from 'react-router';
 import userImage from "../assets/user.png"
 import { AuthContext } from '../provider/AuthProvider';
 
 const Navber = () => {
     const { user, logOut } = use(AuthContext)
-   
+
     const handleLogOut = () => {
         logOut()
             .then(() => {
@@ -27,7 +27,13 @@ const Navber = () => {
 
             </div>
             <div className="login-btn flex gap-3.5 items-center">
-                <img className='w-12 rounded-full border border-gray-300' src={`${user ? user.photoURL : userImage}`} alt="" />
+
+                <div className="avatar">
+                    <div className="ring-primary ring-offset-base-100 w-12 rounded-full ring-2 ring-offset-2">
+                        <img className=' rounded-full border border-gray-300' src={`${user ? user.photoURL : userImage}`} alt="" />
+                    </div>
+                </div>
+
                 {
                     user ? <button onClick={handleLogOut} className='btn px-10 btn-primary'>LogOut</button> : <Link to="/auth/login" className='btn px-10 btn-primary'>Login</Link>
                 }
